@@ -14,14 +14,14 @@ LABEL maintainer="UC San Diego ITS/ETS <ets-consult@ucsd.edu>"
 USER root
 
 RUN apt update
-RUN apt-get update && apt-get install -y aria2 nmap traceroute
+RUN apt-get update && apt-get install -y aria2 nmap traceroute git
 
 # 3) install packages using notebook user
 USER jovyan
 
 # RUN conda install -y scikit-learn
 
-RUN pip install --no-cache-dir networkx scipy pandas numpy matplotlib 
+RUN pip install --no-cache-dir networkx scipy pandas numpy matplotlib plotly ONE-api ibllib git+https://github.com/yuanz271/vlgpax.git 
 
 # Override command to disable running jupyter notebook at launch
 CMD ["/bin/bash"]
