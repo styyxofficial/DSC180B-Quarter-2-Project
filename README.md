@@ -1,7 +1,7 @@
 # Processing Electrophysiology Data to Extract Neural Trajectories
 
 Raw electrophysiology data is very high dimensional and contains a lot of noisy, spiky, activity. Due to this, it must be heavily processed before the accurate neural trajectories can be extracted.
-We utilized two important methods in our study to reduce its dimensions and smooth our data: Factor Analysis and Gaussian Processes. 
+We utilized Variational Latent Gaussian Process in our study to reduce its dimensions and smooth our data. 
 
 # Variational Latent Gaussian Process
 
