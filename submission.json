@@ -1,4 +1,4 @@
 {
-    "dockerhub-id": "ars001/factor_analysis",
-    "build-script": "python run.py"
+    "GitHub Repository": "https://github.com/styyxofficial/DSC180B-Quarter-2-Project",
+    "DockerHub Repository": "https://hub.docker.com/repository/docker/ars001/vlgp/general"
 }
