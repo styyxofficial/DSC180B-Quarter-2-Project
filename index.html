@@ -19,11 +19,44 @@
 
     <h2>Introduction</h2>
 
-    <p>My first paragraph.</p>
+    <p> Commonly in neuroscience research, animal brains are probed with electrodes, measuring voltage signals from neurons while the animal performs a task.
+        Electrodes have become so advanced nowadays that they can contain hundreds of sensors on a probe about the size of a human hair.
+        During data analysis, this high dimensionality creates problems in computation and interpretation. It is hard to see what a 100-dimensional object looks like.
+        Because of this, there has been a push towards dimensionality reduction models in neuroscience research. Researchers can reduce the 100 neurons down to 2 dimensions, allowing them to visualized on a plot.
+        Given that the data is recorded over time, the researchers can observe how the neurons "move" in this 2-D space. When these variables are plotted, they can be interpreted as neural trajectories. 
+    </p>
+
+    <p> The premise behind these models is that although the brain may be complex, maybe the underlying phenomenon is simple.
+        For example, when you walk there are many millions of neurons firing, yet walking is a simple, and so maybe the behavior of the millions neurons can be explained with just a few variables.
+        For terminology, dimensionality reduced variables will be called latent variables, because they are not observed, but explain the observed data.
+    </p>
+
+    <p> For our project, we use Latent Variable Models to extract neural trajectories from a mouse as it performs a decision-making task.
+    </p>
 
     <h2>What are we trying to predict?</h2>
 
+    <p> We are trying to predict whether a mouse will turn a wheel to the left or the right.
+        By plotting our neural trajectories, we may observe that there is a difference in the brain's "path" when the mouse turns a wheel to the left vs right.
+        We will use this difference to create a classification algorithm to predict which direction the mouse will choose.
+        (insert example trajectories that could be differentiable)
+    </p>
+
     <h2>What is our Data?</h2>
+    <p> We use data collected by the International Brain Laboratory [IBL], which inserted Neuropixel probes into mice brains as they performed a decision making task.
+        The task was as follows:
+
+        <ol type="1">
+            <li>A vertical grating is shown on either the mouse's left or right visual field. Simultaneously, a 5 kHz sine wave is played for 100 ms. These are the stimuli and go-cue respectively.</li>
+            <li>The mouse uses a lego wheel to move the vertical grating to the center of the screen.</li>
+            <li>If correctly performed, the mouse receives a water reward. If incorrect, a noise burst is played.</li>
+        </ol>
+    </p>
+
+    <p>
+        The mouse repeated this task hundreds of times with probes inserted in its brain recording voltage signals at 384 locations.
+        IBL has taken this raw electrophyisology data and performed their own preprocessing to give us neuronal units (clusters) and their spike times. (insert raster plot)
+    </p>
 
     <h2>What models are we using?</h2>
 
