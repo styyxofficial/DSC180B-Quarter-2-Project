@@ -1,0 +1,19 @@
+body {
+    text-align: center;
+    padding-top: 50;
+    font-family: "PT Sans", Helvetica, Arial, sans-serif;
+    max-width: 50%;
+    margin: auto;
+}
+
+h2 {
+    text-align: left;
+}
+
+p {
+    text-align: left;
+}
+
+h3 {
+    text-align: left;
+}
