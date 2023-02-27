@@ -5,7 +5,7 @@ We utilized Variational Latent Gaussian Process in our study to reduce its dimen
 
 # Variational Latent Gaussian Process
 
-In a variational latent Gaussian process (VLGP), the observed data, y, is modeled as a Gaussian process, with mean function, f(x), and covariance function, k(x, x') as explained in section 2.2. The underlying structure in the data is captured by latent variables, z, which are treated as random variables. The prior distribution over the latent variables is modeled as a Gaussian distribution.
+In a variational latent Gaussian process (VLGP), the observed data, y, is modeled as a Gaussian process, with mean function, f(x), and covariance function, k(x, x'). The underlying structure in the data is captured by latent variables, z, which are treated as random variables. The prior distribution over the latent variables is modeled as a Gaussian distribution.
 
 The goal of the VLGP is to infer the posterior distribution, q(z|x), over the latent variables given the observed data. This is done using variational inference by minimizing the objective function, also known as the evidence lower bound (ELBO), given by:
 $ELBO = -D_{KL}(q(z|x) || p(z)) + E_{q(z|x)}[log(p(y|z,x))]$
