@@ -82,7 +82,32 @@
     <h2>What models are we using?</h2>
 
     <h3>Gaussian Process Factor Analysis</h3>
-
+   
+    <p>
+        Gaussian Process Factor Analysis (GPFA) models the observed data, y, as a linear combination of low-dimensional latent variables, z, using a Gaussian process. 
+        The latent variables are modeled as a Gaussian process with mean, m, and covariance function, k_z(z_i, z_j). The observed data is modeled as a linear 
+        combination of the latent variables, given by y = Cz + ε, where C is a loading matrix and ε is a noise term.
+    </p>
+    
+    <p>
+        The goal of GPFA is to infer the latent variables and the loading matrix given the observed data. This can be done using maximum likelihood estimation by 
+        maximizing the log-likelihood of the data, given by:
+    </p>
+    
+    <p>
+        log p(y|C, m, k_z) = -1/2 y^T K_y^-1 y - 1/2 log |K_y| - n/2 log(2π)
+    </p>
+    
+    <p>
+        where K_y = CC^T + σ^2I is the covariance matrix of the observed data and σ^2 is the noise variance. The solution provides estimates of the latent variables 
+        and the loading matrix, which can be used to reconstruct the underlying patterns in the data.
+    </p>
+    
+    <figure>
+        <img src="output/imgs/ModelData.PNG" alt="Model Trajectories" style="width:1034px;height:393px;"  class="center">
+        <figcaption>Model's attempt to extract latent dynamics from created dataset</figcaption>
+    </figure>
+    
     <h3>Variational Latent Gaussian Process</h3>
 
     <h2>Procedure</h2>
