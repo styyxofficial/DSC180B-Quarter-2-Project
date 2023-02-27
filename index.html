@@ -109,6 +109,26 @@
     </figure>
     
     <h3>Variational Latent Gaussian Process</h3>
+    
+    <p>
+        Variational Latent Gaussian Process (VLGP) extends the standard Gaussian Process (GP) by introducing a latent variable model to capture the underlying 
+        dynamics of the time series. The latent variables z are modeled as a Gaussian Process with mean function m(z_t) and covariance function k(z_t, z_t'). 
+    </p>
+    
+    <p>
+        VLGP uses variational inference to learn the latent trajectories and basis functions by optimizing the Evidence Lower Bound (ELBO), given by:
+    </p>
+    
+    <figure>
+        <img src="output/imgs/LatxFormulaVLGP.PNG" alt="Latex Formula" style="width:484px;height:51px;"  class="center">
+    </figure>
+    
+    <p>
+        where q(z_{1:T}) is an approximate posterior distribution over the latent variables, and p(z_{1:T}) is the prior distribution over the latent variables 
+        defined by the GP. The first term of the ELBO encourages the model to generate data that is consistent with the observed data, while the second term 
+        encourages the approximate posterior distribution to be close to the prior distribution. Using the posterior distribution, we can capture the underlying dynamics
+        of our neural data.
+    </p>
 
     <h2>Procedure</h2>
 
