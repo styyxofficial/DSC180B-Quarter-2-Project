@@ -22,12 +22,12 @@
     <p> Commonly in neuroscience research, animal brains are probed with electrodes, measuring voltage signals from neurons while the animal performs a task.
         Electrodes have become so advanced nowadays that they can contain hundreds of sensors on a probe about the size of a human hair.
         During data analysis, this high dimensionality creates problems in computation and interpretation. It is hard to see what a 100-dimensional object looks like.
-        Because of this, there has been a push towards dimensionality reduction models in neuroscience research. Researchers can reduce the 100 neurons down to 2 dimensions, allowing them to visualized on a plot.
+        Because of this, there has been a push towards dimensionality reduction models in neuroscience research. Researchers can reduce the 100 neurons down to 2 dimensions, allowing them to be visualized on a plot.
         Given that the data is recorded over time, the researchers can observe how the neurons "move" in this 2-D space. When these variables are plotted, they can be interpreted as neural trajectories. 
     </p>
 
     <p> The premise behind these models is that although the brain may be complex, maybe the underlying phenomenon is simple.
-        For example, when you walk there are many millions of neurons firing, yet walking is a simple, and so maybe the behavior of the millions neurons can be explained with just a few variables.
+        For example, when you walk there are many millions of neurons firing, yet walking is simple, and so maybe the behavior of the millions neurons can be explained with just a few variables.
         For terminology, dimensionality reduced variables will be called latent variables, because they are not observed, but explain the observed data.
     </p>
 
@@ -39,12 +39,12 @@
     <p> We are trying to predict whether a mouse will turn a wheel to the left or the right.
         By plotting our neural trajectories, we may observe that there is a difference in the brain's "path" when the mouse turns a wheel to the left vs right.
         We will use this difference to create a classification algorithm to predict which direction the mouse will choose.
-        Below is are example trajectories that we might obtain:
+        Figures 1 and 2 show example trajectories that we might obtain.
     </p>
 
     <figure>
         <img src="output/imgs/example_trajectory1.png" alt="Example Trajectory 1" style="width:566px;height:454px;"  class="center">
-        <figcaption>Fig.1 - Example trajectories that would be differentiable between behaviors. The red dashed line indcated separability between the trajectories. We can clearly see that the 2 behaviors follow different paths</figcaption>
+        <figcaption>Fig.1 - Example trajectories that would be differentiable between behaviors. The red dashed line indcates separability between the trajectories. We can clearly see that the 2 behaviors follow different paths</figcaption>
     </figure>
     <br>
     <figure>
@@ -63,14 +63,19 @@
         </ol>
     </p>
 
+    <figure>
+        <img src="output/imgs/exp_setup1.png" alt="Experimental Setup" style="width:700px;height:380px;"  class="center">
+        <figcaption>Fig.3 - Experimental Setup showing the vertical grating and the decision of the mouse moving the wheel.</figcaption>
+    </figure>
+
     <p>
         The mouse repeated this task hundreds of times with probes inserted in its brain recording voltage signals at 384 locations.
-        IBL has taken this raw electrophyisology data and performed their own preprocessing to give us neuronal units (clusters) and their spike times. (insert raster plot)
+        IBL has taken this raw electrophyisology data and performed their own preprocessing to give us neuronal units (clusters) and their spike times.
     </p>
 
     <figure>
         <img src="output/imgs/raster1.png" alt="Raster Plot 1" style="width:953px;height:534px;"  class="center">
-        <figcaption>Fig.3 - Raster plot of neurons over a session. Each black dot is a neuron firing (spike). Bars on the right indicate brain regions.</figcaption>
+        <figcaption>Fig.4 - Raster plot of neurons over a session. Each black dot is a neuron firing (spike). Bars on the right indicate brain regions.</figcaption>
     </figure>
 
 
@@ -86,11 +91,11 @@
 
     <figure>
         <img src="output/imgs/single_trial.png" alt="Model Trajectories" style="width:860px;height:480px;"  class="center">
-        <figcaption>Fig.1 - Raster plot of a single trial. Y-axis represents depth.</figcaption>
+        <figcaption>Fig.5 - Raster plot of a single trial. Y-axis represents depth.</figcaption>
     </figure>
 
     <p>
-        From Figure 3, we can see a flurry of neural activity in the MOp as the mouse begins to move. This increase in firing rate is what we hope to capture in our model.
+        From Figure 5, we can see a flurry of neural activity in the MOp as the mouse begins to move. This increase in firing rate is what we hope to capture in our model.
     </p>
 
     <h3>Data Cleaning</h3>
@@ -107,21 +112,21 @@
     <h3>Model Fitting and Trajectories</h3>
     <p>
         We train the model on a window that begins 0.1 seconds before the mouse starts moving to 1 second after the mouse started moving.
-        This should allow us to see how the brain changes throughout the mouse's behavior.
+        This should allow us to see how the brain changes throughout the mouse's actions.
     </p>
 
     <p>
         The Latent Variable Models were able to fit within a few minutes and inference took about 1 second per trajectory.
-        Below is a real output of the model:
+        Figure 6 shows a real output of the model.
     </p>
 
     <figure>
         <img src="output/imgs/model_trajectories1.png" alt="Model Trajectories" style="width:566px;height:454px;"  class="center">
-        <figcaption>Fig.1 - 10 Neural Trajectories when the stimulus was presented on the left visual field vs right visual field.</figcaption>
+        <figcaption>Fig.6 - 10 Neural Trajectories when the stimulus was presented on the left visual field vs right visual field.</figcaption>
     </figure>
 
     <p>
-        From the trajectories above, we can see that it seems unlikely to be able to differentiate the mouse's behavior.
+        From the trajectories in Figure 6, we can see that it seems unlikely to be able to differentiate the mouse's behavior.
         As mentioned before, we want to see a clean separation between the trial types. 
         Nevertheless, we continue our analyses in the hopes that the classification model will be able to find a separation that we could not.
     </p>
