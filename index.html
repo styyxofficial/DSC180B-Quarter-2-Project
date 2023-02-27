@@ -94,18 +94,18 @@
         maximizing the log-likelihood of the data, given by:
     </p>
     
-    <p>
-        log p(y|C, m, k_z) = -1/2 y^T K_y^-1 y - 1/2 log |K_y| - n/2 log(2π)
-    </p>
-    
+    <figure>
+        <img src="output/imgs/LatxFormula.PNG" alt="Latex Formula" style="width:484px;height:51px;"  class="center">
+    </figure>
+        
     <p>
         where K_y = CC^T + σ^2I is the covariance matrix of the observed data and σ^2 is the noise variance. The solution provides estimates of the latent variables 
         and the loading matrix, which can be used to reconstruct the underlying patterns in the data.
     </p>
     
     <figure>
-        <img src="output/imgs/ModelData.PNG" alt="Trajectories from Model Data" style="width:1034px;height:393px;"  class="center">
-        <figcaption>Model's attempt to extract latent dynamics from created dataset</figcaption>
+        <img src="output/imgs/ModelData.PNG" alt="Trajectories from Model Data" style="width:878px;height:334px;"  class="center">
+        <figcaption>Fig.5 - Model's attempt to extract latent dynamics from created dataset</figcaption>
     </figure>
     
     <h3>Variational Latent Gaussian Process</h3>
@@ -116,11 +116,11 @@
 
     <figure>
         <img src="output/imgs/single_trial.png" alt="Model Trajectories" style="width:860px;height:480px;"  class="center">
-        <figcaption>Fig.5 - Raster plot of a single trial. Y-axis represents depth.</figcaption>
+        <figcaption>Fig.6 - Raster plot of a single trial. Y-axis represents depth.</figcaption>
     </figure>
 
     <p>
-        From Figure 5, we can see a flurry of neural activity in the MOp as the mouse begins to move. This increase in firing rate is what we hope to capture in our model.
+        From Figure 6, we can see a flurry of neural activity in the MOp as the mouse begins to move. This increase in firing rate is what we hope to capture in our model.
     </p>
 
     <h3>Data Cleaning</h3>
