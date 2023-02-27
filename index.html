@@ -67,17 +67,42 @@
     <h2>Procedure</h2>
 
     <h3>EDA</h3>
+    <p>
+        (insert raster plot of a single trial, with go cue, first movement and reward. Can be picked from the ibl website. choose one that clearly shows a difference after cue/movement)
+    </p>
 
     <h3>Data Cleaning</h3>
+    <p>
+        We chose to analyze data that came from the Primary Motor Cortex (MOp), Secondary Motor Cortex (MOs), and Primary Visual Area (VISp).
+        We believed that the trajectories obtained from these regions would be more differentiable between the different behaviors we expect the mouse to engage in.
+    </p>
+
+    <p>
+        Furthermore, we filtered clusters based on their quality. IBL has a metric for determining how "good" a cluster is, which indicates their confidence that the spikes came from a single unit.
+        A bad cluster would indicate that IBL thinks the spike could have come from multiple units, which could add noise to our data.
+    </p>
 
     <h3>Model Fitting and Trajectories</h3>
-
+    <p>
+        The Latent Variable Models were able to fit within a few minutes and inference took about 1 second per trajectory.
+        Below is a real output of the model:
+        <img src="output/imgs/model_trajectories.png" alt="Model Trajectories" style="width:42px;height:42px;">
+    </p>
+    
     <h3>Behavior Classification</h3>
+    <p>
+        Work in Progress
+    </p>
 
     <h2>Results</h2>
+    <p>
+        Work in Progress
+    </p>
 
     <h2>Conclusion</h2>
-
+    <p>
+        Work in Progress
+    </p>
 
 </body>
 
