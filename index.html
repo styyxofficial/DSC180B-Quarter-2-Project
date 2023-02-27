@@ -39,8 +39,18 @@
     <p> We are trying to predict whether a mouse will turn a wheel to the left or the right.
         By plotting our neural trajectories, we may observe that there is a difference in the brain's "path" when the mouse turns a wheel to the left vs right.
         We will use this difference to create a classification algorithm to predict which direction the mouse will choose.
-        (insert example trajectories that could be differentiable)
+        Below is are example trajectories that we might obtain:
     </p>
+
+    <figure>
+        <img src="output/imgs/example_trajectory1.png" alt="Example Trajectory 1" style="width:566px;height:454px;"  class="center">
+        <figcaption>Fig.1 - Example trajectories that would be differentiable between behaviors. The red dashed line indcated separability between the trajectories. We can clearly see that the 2 behaviors follow different paths</figcaption>
+    </figure>
+    <br>
+    <figure>
+        <img src="output/imgs/example_trajectory2.png" alt="Example Trajectory 1" style="width:566px;height:454px;"  class="center">
+        <figcaption>Fig.1 - Example trajectories that would not be differentiable between behaviors. As you can see, it would not be possible to say that the behaviors followed different trajectories.</figcaption>
+    </figure>
 
     <h2>What is our Data?</h2>
     <p> We use data collected by the International Brain Laboratory [IBL], which inserted Neuropixel probes into mice brains as they performed a decision making task.
@@ -84,6 +94,11 @@
 
     <h3>Model Fitting and Trajectories</h3>
     <p>
+        We train the model on a window that begins 0.1 seconds before the mouse starts moving to 1 second after the mouse started moving.
+        This should allow us to see how the brain changes throughout the mouse's behavior.
+    </p>
+
+    <p>
         The Latent Variable Models were able to fit within a few minutes and inference took about 1 second per trajectory.
         Below is a real output of the model:
     </p>
@@ -93,7 +108,11 @@
         <figcaption>Fig.1 - 10 Neural Trajectories when the stimulus was presented on the left visual field vs right visual field.</figcaption>
     </figure>
 
-    
+    <p>
+        From the trajectories above, we can see that it seems unlikely to be able to differentiate the mouse's behavior.
+        As mentioned before, we want to see a clean separation between the trial types. 
+        Nevertheless, we continue our analyses in the hopes that the classification model will be able to find a separation that we could not.
+    </p>
 
     
     <h3>Behavior Classification</h3>
