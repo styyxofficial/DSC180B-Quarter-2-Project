@@ -3,7 +3,7 @@ import numpy as np
 from scipy.stats import multivariate_normal
 from numpy.linalg import inv, det
 from scipy.optimize import minimize
-from src.data.RBFKernel import RBFKernel
+from data.data_prep import RBFKernel
 
 
 class GP:

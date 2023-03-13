@@ -6,7 +6,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import numpy as np
 import os
-from src.data.RBFKernel import RBFKernel
+from data.data_prep import RBFKernel
 import shutil
 
 ROOT_STATS_DIR = './output'
