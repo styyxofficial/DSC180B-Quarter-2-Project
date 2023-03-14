@@ -82,8 +82,6 @@ if __name__ == "__main__":
     sessionTrain, params = vi.fit(sessionTrain, n_factors=config['latent_dims'], kernel=kernel, seed=10, max_iter=config['max_iter'], trial_length=config['min_trial_length'], GPFA=True)
     z_train = rearrange(sessionTrain.z, '(trials time) lat -> trials time lat', time=bin_data[0].shape[1])
     
-    print(type)
-    exit()
     # Infer latents of test data
     sessionTest = vi.infer(sessionTest, params=params)
     z_test = rearrange(sessionTest.z, '(trials time) lat -> trials time lat', time=bin_data[0].shape[1])
@@ -106,11 +104,11 @@ if __name__ == "__main__":
     mod.fit(X_train01, y_train01)
     
     print('\n\n\n')
-    print("Results\n________________")
+    print("Results\n--------------------------------------------")
     print("Logistic Regression Model trained to classify between the wheel turned Right correctly (Class 0) vs the wheel turned Left correctly (Class 1):")
     print("Baseline Accuracy is: {0:.0f}%".format(max(np.mean(y_test01==0), np.mean(y_test01==1))*100))
     print("Test Accuracy: {0:.0f}%".format(mod.score(X_test01, y_test01)*100))
-    print("__________________________________________")
+    print("--------------------------------------------")
     class_plots(X_train[y_train==0], X_train[y_train==1], 'Wheel Turned Right', 'Wheel Turned Left', ROOT_DIR, config['exp_name'], 'Latent Variables at Time=100ms', 'slice1.png')
     
     
@@ -126,7 +124,7 @@ if __name__ == "__main__":
     print("Logistic Regression Model trained to classify between the wheel turned Right correctly (Class 0) vs the wheel turned Right incorrectly (Class 2):")
     print("Baseline Accuracy is: {0:.0f}%".format(max(np.mean(y_test02==0), np.mean(y_test02==2))*100))
     print("Test Accuracy: {0:.0f}%".format(mod.score(X_test02, y_test02)*100))
-    print("__________________________________________")
+    print("--------------------------------------------")
     class_plots(X_train[y_train==0], X_train[y_train==2], 'Wheel Turned Right Correctly', 'Wheel Turned Right Incorrectly', ROOT_DIR, config['exp_name'], 'Latent Variables at Time=100ms', 'slice2.png')
     
     
@@ -144,4 +142,4 @@ if __name__ == "__main__":
     print("Logistic Regression Model trained to classify between the wheel turned Right correctly (Class 0) vs the wheel turned Left correctly (Class 1) using all the Neurons (no dimensionality reduction):")
     print("Baseline Accuracy is: {0:.0f}%".format(max(np.mean(y_test_full==0), np.mean(y_test_full==1))*100))
     print("Test Accuracy: {0:.0f}%".format(mod.score(X_test_full, y_test_full)*100))
-    print("__________________________________________")
+    print("--------------------------------------------")
