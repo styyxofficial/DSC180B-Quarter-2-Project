@@ -11,6 +11,7 @@ from src.data.data_prep import filter_spikes, bin_spikes, class_data
 from src.visualization.plotting import plot_trajectories2L, class_plots
 
 from sklearn.linear_model import LogisticRegression
+from sklearn.metrics import balanced_accuracy_score
 
 import numpy as np
 import sys
@@ -102,8 +103,7 @@ if __name__ == "__main__":
     print('\n\n\n')
     print("Results\n--------------------------------------------")
     print("Logistic Regression Model trained to classify between the wheel turned Right correctly (Class 0) vs the wheel turned Left correctly (Class 1):")
-    print("Baseline Accuracy is: {0:.0f}%".format(max(np.mean(y_test01==0), np.mean(y_test01==1))*100))
-    print("Test Accuracy: {0:.0f}%".format(mod.score(X_test01, y_test01)*100))
+    print("Balanced Test Accuracy: {0:.0f}%".format(balanced_accuracy_score(y_test01, mod.predict(X_test01))*100))
     print("--------------------------------------------")
     class_plots(X_train[y_train==0], X_train[y_train==1], 'Wheel Turned Right', 'Wheel Turned Left', ROOT_DIR, config['exp_name'], 'Latent Variables at Time=100ms', 'slice1.png')
     
@@ -118,8 +118,7 @@ if __name__ == "__main__":
     mod.fit(X_train02, y_train02)
     
     print("Logistic Regression Model trained to classify between the wheel turned Right correctly (Class 0) vs the wheel turned Right incorrectly (Class 2):")
-    print("Baseline Accuracy is: {0:.0f}%".format(max(np.mean(y_test02==0), np.mean(y_test02==2))*100))
-    print("Test Accuracy: {0:.0f}%".format(mod.score(X_test02, y_test02)*100))
+    print("Balanced Test Accuracy: {0:.0f}%".format(balanced_accuracy_score(y_test02, mod.predict(X_test02))*100))
     print("--------------------------------------------")
     class_plots(X_train[y_train==0], X_train[y_train==2], 'Wheel Turned Right Correctly', 'Wheel Turned Right Incorrectly', ROOT_DIR, config['exp_name'], 'Latent Variables at Time=100ms', 'slice2.png')
     
@@ -136,6 +135,5 @@ if __name__ == "__main__":
     mod.fit(X_train_full, y_train_full)
     
     print("Logistic Regression Model trained to classify between the wheel turned Right correctly (Class 0) vs the wheel turned Left correctly (Class 1) using all the Neurons (no dimensionality reduction):")
-    print("Baseline Accuracy is: {0:.0f}%".format(max(np.mean(y_test_full==0), np.mean(y_test_full==1))*100))
-    print("Test Accuracy: {0:.0f}%".format(mod.score(X_test_full, y_test_full)*100))
+    print("Balanced Test Accuracy: {0:.0f}%".format(balanced_accuracy_score(y_test_full, mod.predict(X_test_full))*100))
     print("--------------------------------------------")
