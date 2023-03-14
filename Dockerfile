@@ -21,9 +21,9 @@ USER jovyan
 
 # RUN conda install -y scikit-learn
 
-RUN pip install --no-cache-dir --ignore-installed networkx ONE-api ibllib matplotlib scikit-learn plotly pandas einops
-RUN pip install "jax[cpu]===0.3.14" -f https://whls.blob.core.windows.net/unstable/index.html --use-deprecated legacy-resolver
-RUN pip install git+https://github.com/yuanz271/vlgpax.git
+RUN pip install --no-cache-dir --ignore-installed --yes networkx ONE-api ibllib matplotlib scikit-learn plotly pandas einops
+RUN pip install --no-cache-dir --ignore-installed --yes "jax[cpu]===0.3.14" -f https://whls.blob.core.windows.net/unstable/index.html --use-deprecated legacy-resolver
+RUN pip install --no-cache-dir --ignore-installed --yes git+https://github.com/yuanz271/vlgpax.git
 
 # Override command to disable running jupyter notebook at launch
 CMD ["/bin/bash"]
