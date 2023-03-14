@@ -53,12 +53,12 @@ def plot_trajectories2L(z, choices, accuracy, bin_size, ROOT_DIR, exp_name, save
                     zaxis_title='Latent Variable 2'),
                     width=1000, height=1000, title='Latent Variables over Time'
                     )
-    
-    fig.write_html(os.path.join(ROOT_DIR, "output", exp_name, "latent_trajs2_vlgp.html"))
+    if save:
+        fig.write_html(os.path.join(ROOT_DIR, "output", exp_name, "latent_trajs2_vlgp.html"))
     
     fig.show()
     
-def class_plots(class0, class1, class1_labels, class2_labels, ROOT_DIR, exp_name, title, figname):
+def class_plots(class0, class1, class1_labels, class2_labels, ROOT_DIR, exp_name, title, figname, save=True):
     plt.figure()
     plt.scatter(class0[:, 0], class0[:, 1], color='blue', label=class1_labels)
     plt.scatter(class1[:, 0], class1[:, 1], color='red', label=class2_labels)
@@ -66,5 +66,6 @@ def class_plots(class0, class1, class1_labels, class2_labels, ROOT_DIR, exp_name
     plt.ylabel('Latent Variable 2')
     plt.title(title)
     plt.legend()
-    plt.savefig(os.path.join(ROOT_DIR, 'output', exp_name, 'imgs', figname))
+    if save:
+        plt.savefig(os.path.join(ROOT_DIR, 'output', exp_name, 'imgs', figname))
     plt.show()
