@@ -1,6 +1,8 @@
 import plotly.express as px
 import plotly.graph_objects as go
 import numpy as np
+import matplotlib.pyplot as plt
+import os
 
 def create_raster(sl, spikes, channels):
     return
@@ -53,3 +55,14 @@ def plot_trajectories2L(z, choices, accuracy, bin_size):
                     )
     
     fig.show()
+    
+def class_plots(class0, class1, class1_labels, class2_labels, ROOT_DIR, exp_name, title, figname):
+    plt.figure()
+    plt.scatter(class0[:, 0], class0[:, 1], color='blue', label=class1_labels)
+    plt.scatter(class1[:, 0], class1[:, 1], color='red', label=class2_labels)
+    plt.xlabel('Latent Variable 1')
+    plt.ylabel('Latent Variable 2')
+    plt.title(title)
+    plt.legend()
+    plt.savefig(os.path.join(ROOT_DIR, 'output', exp_name, 'imgs', figname))
+    plt.show()

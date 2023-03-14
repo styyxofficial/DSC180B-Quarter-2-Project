@@ -1,6 +1,0 @@
-{
-    "experiment_name" : "fa",
-    "latent_factors" : 3,
-    "training_data_path" : "data/out/FA_Data.csv",
-    "epochs" : 250
-}

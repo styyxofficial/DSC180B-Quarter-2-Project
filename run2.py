@@ -8,7 +8,7 @@ from vlgpax import vi
 from einops import rearrange
 
 from src.data.data_prep import filter_spikes, bin_spikes, class_data
-from src.visualization.plotting import plot_trajectories2L
+from src.visualization.plotting import plot_trajectories2L, class_plots
 
 from sklearn.linear_model import LogisticRegression
 
@@ -94,7 +94,7 @@ if __name__ == "__main__":
     X_test, y_test = class_data(z_test, choices[n_train:], accuracy[n_train:], config['time_significance'])
     
     
-    # Train a model to classify Wheel moved left correctly vs Wheel moved right correctly
+    # Train a model to classify Wheel moved Right correctly vs Wheel moved left correctly
     X_train01 = X_train[((y_train==0) | (y_train==1))]
     y_train01 = y_train[((y_train==0) | (y_train==1))]
     X_test01 = X_test[((y_test==0) | (y_test==1))]
@@ -103,6 +103,30 @@ if __name__ == "__main__":
     mod = LogisticRegression()
     mod.fit(X_train01, y_train01)
     
-    print("Results of a Logistic Regression Model trained to classify between the wheel turned left correctly vs the wheel turned right correctly")
-    print("Our baseline accuracy is:", max(np.mean(y_test01==0), np.mean(y_test01==1)))
-    print("Test Accuracy:", mod.score(X_test01, y_test01))
+    print('\n\n\n')
+    print("Results\n________________")
+    print("Logistic Regression Model trained to classify between the wheel turned Right correctly (Class 0) vs the wheel turned Left correctly (Class 1):")
+    # print("Our baseline accuracy is:", max(np.mean(y_test01==0), np.mean(y_test01==1)))
+    print("Baseline Accuracy is: {0:.0f}%".format(max(np.mean(y_test01==0), np.mean(y_test01==1))*100))
+    # print("Test Accuracy:", mod.score(X_test01, y_test01))
+    print("Test Accuracy: {0:.0f}%".format(mod.score(X_test01, y_test01)*100))
+    print("__________________________________________")
+    class_plots(X_train[y_train==0], X_train[y_train==1], 'Wheel Turned Right', 'Wheel Turned Left', ROOT_DIR, config['exp_name'], 'Latent Variables at Time=100ms', 'slice1.png')
+    
+    
+    # Train a model to classify Wheel moved Right correctly vs Wheel moved Right incorrectly
+    X_train02 = X_train[((y_train==0) | (y_train==2))]
+    y_train02 = y_train[((y_train==0) | (y_train==2))]
+    X_test02 = X_test[((y_test==0) | (y_test==2))]
+    y_test02 = y_test[((y_test==0) | (y_test==2))]
+
+    mod = LogisticRegression()
+    mod.fit(X_train02, y_train02)
+    
+    print("Logistic Regression Model trained to classify between the wheel turned Right correctly (Class 0) vs the wheel turned Right incorrectly (Class 2):")
+    # print("Our baseline accuracy is:", max(np.mean(y_test01==0), np.mean(y_test01==1)))
+    print("Baseline Accuracy is: {0:.0f}%".format(max(np.mean(y_test02==0), np.mean(y_test02==2))*100))
+    # print("Test Accuracy:", mod.score(X_test02, y_test02))
+    print("Test Accuracy: {0:.0f}%".format(mod.score(X_test02, y_test02)*100))
+    print("__________________________________________")
+    class_plots(X_train[y_train==0], X_train[y_train==2], 'Wheel Turned Right Correctly', 'Wheel Turned Right Incorrectly', ROOT_DIR, config['exp_name'], 'Latent Variables at Time=100ms', 'slice2.png')

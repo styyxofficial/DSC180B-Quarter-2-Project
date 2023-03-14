@@ -80,4 +80,4 @@ def class_data(z, choices, accuracy, time_significance):
             y.append(3)
     
     
-    return X, y
+    return np.array(X), np.array(y)
