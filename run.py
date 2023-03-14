@@ -1,125 +1,141 @@
+from one.api import ONE
+from brainbox.io.one import SpikeSortingLoader
+from brainbox.processing import bin_spikes
+
+from vlgpax.model import Session
+from vlgpax.kernel import RBF
+from vlgpax import vi
+from einops import rearrange
+
+from src.data.data_prep import filter_spikes, bin_spikes, class_data
+from src.visualization.plotting import plot_trajectories2L, class_plots
+
+from sklearn.linear_model import LogisticRegression
+
+import numpy as np
 import sys
 import json
-from src.models.FactorAnalysis import FactorAnalysisModel
-from src.models.GaussianProcess import GP
-import pandas as pd
-import matplotlib.pyplot as plt
-import numpy as np
 import os
-from data.data_prep import RBFKernel
 import shutil
 
-ROOT_STATS_DIR = './output'
-
-def record_fa_stats(config, weights):
-    with open(os.path.join(ROOT_STATS_DIR, config['experiment_name'], 'weights.txt'), "w") as outfile:
-        outfile.write(np.array2string(weights))
-        
-def plot_fa_stats(config, X, y):
-    plt.figure()
-    plt.plot(X, y, label="Negative Log Likelihood")
-    plt.xlabel("Epochs")
-    plt.ylabel("Negative Log Likelihood")
-    plt.title(config['experiment_name']+" Stats Plot")
-    plt.savefig(os.path.join(ROOT_STATS_DIR, config['experiment_name'], 'likelihood.png'))
-    plt.close()
-         
-def get_factor_loadings(config):
-    # If the model has not been run, run it
-    if os.path.exists(os.path.join(ROOT_STATS_DIR, config['experiment_name'])) ==False:
-        model = FactorAnalysisModel(config)
-        X_train = pd.read_csv(config['training_data_path']).to_numpy()   # Read data
-        factor_loadings, likelihoods = model.train(X_train)
-        
-        os.makedirs(os.path.join(ROOT_STATS_DIR, config['experiment_name']))
-        plot_fa_stats(config, np.arange(config['epochs']), likelihoods)
-        record_fa_stats(config, factor_loadings)
-
-def plot_gpfa(config, X_train, y_train, X_test, mu, sigma):
-    fig, ax1 = plt.subplots(
-    nrows = 1, ncols=1, figsize=(6, 6))
-
-    # Plot the correct distribution
-    ax1.plot(X_train, y_train, 'ko', linewidth=2, label='$(x_{train}, y_{train})$')
-
-    # Plot the posterior
-    ax1.plot(X_test, mu, 'r-', lw=2, label='$\mu$')
-    ax1.fill_between(X_test, mu-2*np.sqrt(np.diag(sigma)), mu+2*np.sqrt(np.diag(sigma)), color='red', alpha=0.15, label='$2 \sigma$')
-
-
-    ax1.set_xlabel('$x$', fontsize=13)
-    ax1.set_ylabel('$y$', fontsize=13)
-    ax1.set_title('Distribution of posterior and prior data.')
-    ax1.axis([X_train.min()-2, X_train.max()+2, -3, 3])
-    ax1.legend()
-    fig.savefig(os.path.join(ROOT_STATS_DIR, config['experiment_name'], 'gp_regression.png'))
-
-def record_gpfa_params(config, mu, sigma, sv, ls, nv, cond_num):
-    dictionary = {'mean' : mu.tolist(),
-                  'variance' : sigma.tolist(),
-                  'signal_variance' : sv,
-                  'length_scale' : ls,
-                  'noise_variance' : nv,
-                  'condition_number' : cond_num}
-    
-    json_object = json.dumps(dictionary, indent=4)
-
-    with open(os.path.join(ROOT_STATS_DIR, config['experiment_name'], 'params.json'), "w") as outfile:
-        outfile.write(json_object)
-    return
-
-def get_gp_regression(config):
-    # get data
-    # train gp
-    # get plots and parameters. Save them
-    if os.path.exists(os.path.join(ROOT_STATS_DIR, config['experiment_name'])) ==False:
-        # Get data
-        df = pd.read_csv(config['training_data_path'])   # Read data
-        model = GP(RBFKernel())
-        X_test = np.linspace(start=df['X_train'].min()-2, stop=df['X_train'].max()+2, num=config['num_test_locations'])
-        
-        # Train model
-        mu, sigma, sv, ls, nv, cond_num = model.train(df['X_train'].to_numpy(), df['y_train'].to_numpy(), X_test)
-
-        # Save output
-        os.makedirs(os.path.join(ROOT_STATS_DIR, config['experiment_name']))
-        plot_gpfa(config, df['X_train'], df['y_train'], X_test, mu, sigma)
-        record_gpfa_params(config, mu, sigma, sv, ls, nv, cond_num)
-    return
+ROOT_DIR = os.path.dirname(__file__)
 
 if __name__ == "__main__":
-    if len(sys.argv) > 1:
-        if sys.argv[1] == 'test':
-            config = json.load(open('config/testdata.json'))
-            get_factor_loadings(config)
-        elif sys.argv[1] == 'gp':
-            config = json.load(open('config/gp.json'))
-            get_gp_regression(config)
-        elif sys.argv[1] == 'fa':
-            config = json.load(open('config/fa.json'))
-            get_factor_loadings(config)
-        elif sys.argv[1] == 'gpfa':
-            # Run both GP and FA
-            config = json.load(open('config/fa.json'))
-            get_factor_loadings(config)
-            
-            config = json.load(open('config/gp.json'))
-            get_gp_regression(config)
-        elif sys.argv[1] == 'all':
-            # Run both GP and FA
-            config = json.load(open('config/fa.json'))
-            get_factor_loadings(config)
-            
-            config = json.load(open('config/gp.json'))
-            get_gp_regression(config)
-        elif sys.argv[1] == 'clean':
-            shutil.rmtree(os.path.join(ROOT_STATS_DIR), ignore_errors=True)
-            os.makedirs(os.path.join(ROOT_STATS_DIR))
-    else:
-        # run gpfa
-        config = json.load(open('config/fa.json'))
-        get_factor_loadings(config)
+    
+    if len(sys.argv) < 2:
+        raise Exception('Config file not provided as an argument')
+    elif len(sys.argv) > 2:
+        raise Exception('Too many arguments. Only provide the config file as an argument.')
+    
+    with open('config/' + sys.argv[1]) as json_file:
+        config = json.load(json_file)
+    
+    # make necessary directories
+    shutil.rmtree(os.path.join(ROOT_DIR, 'data', 'out', config['exp_name']))
+    shutil.rmtree(os.path.join(ROOT_DIR, 'output', config['exp_name'], 'imgs'))
+    os.makedirs(os.path.join(ROOT_DIR, 'data', 'out', config['exp_name']))
+    os.makedirs(os.path.join(ROOT_DIR, 'output', config['exp_name'], 'imgs'))
+    
+    # Connect to ONE Database
+    # mode=local uses locally stored data. If the mouse data you want to analyze is not in your cache_dir, remove the mode=local parameter so the data can be downloaded to your machine
+    pw = 'international'
+    one = ONE(base_url='https://openalyx.internationalbrainlab.org', password=pw, silent=True,
+              cache_dir=os.path.join(ROOT_DIR, 'data', 'raw', 'ONE'), mode='local')
+    
+    # Load data
+    sl = SpikeSortingLoader(one=one, eid=config['eid'], pname=config['probe_name'])
+    spikes, clusters, channels = sl.load_spike_sorting()
+    clusters = sl.merge_clusters(spikes, clusters, channels)
+    trials = one.load_object(config['eid'], 'trials', collection='alf')
+    
+    # Save a raster plot before data cleaning
+    if config['raster']:
+        sl.raster(spikes, channels, save_dir=os.path.join(ROOT_DIR, 'output', config['exp_name'], 'imgs', 'raster1.png'))
+    
+    # Clean data
+    # Here we filter channels based on quality (>0.5) and brain region (Primary Motor Cortex [MO])
+    spikes = filter_spikes(spikes, clusters)
+    
+    # Save a raster plot after data cleaning
+    if config['raster']:
+        sl.raster(spikes, channels, save_dir=os.path.join(ROOT_DIR, 'output', config['exp_name'], 'imgs', 'raster2.png'))
+    
+    # Bin spikes
+    bin_data, goCue_times, firstMove_times, choices, accuracy = bin_spikes(spikes, trials, ROOT_DIR, config['exp_name'], bin_size=config['bin_size'], save=True)
+    n_train = 250 # number of training data points
+    
+    # Create training and testing data
+    sessionTrain = Session(config['bin_size'])
+    for i in range(n_train):
+        sessionTrain.add_trial(i, y=bin_data[i].T)
         
-        config = json.load(open('config/gp.json'))
-        get_gp_regression(config)
-        
+    sessionTest = Session(config['bin_size'])
+    for i in range(n_train, len(bin_data)):
+        sessionTest.add_trial(i, y=bin_data[i].T)
+    
+    # Build and Train Latent Variable Model
+    kernel = RBF(scale=1, lengthscale=config['length_scale'])
+    sessionTrain, params = vi.fit(sessionTrain, n_factors=config['latent_dims'], kernel=kernel, seed=10, max_iter=config['max_iter'], trial_length=config['min_trial_length'], GPFA=True)
+    z_train = rearrange(sessionTrain.z, '(trials time) lat -> trials time lat', time=bin_data[0].shape[1])
+    
+    # Infer latents of test data
+    sessionTest = vi.infer(sessionTest, params=params)
+    z_test = rearrange(sessionTest.z, '(trials time) lat -> trials time lat', time=bin_data[0].shape[1])
+    
+    # Plot Training trajectories
+    plot_trajectories2L(z_train, choices[:n_train], accuracy[:n_train], config['bin_size']*1000, ROOT_DIR, config['exp_name'], save=True)
+    
+    # Create Training data for classifier
+    X_train, y_train = class_data(z_train, choices[:n_train], accuracy[:n_train], config['time_significance'])
+    X_test, y_test = class_data(z_test, choices[n_train:], accuracy[n_train:], config['time_significance'])
+    
+    
+    # Train a model to classify Wheel moved Right correctly vs Wheel moved left correctly
+    X_train01 = X_train[((y_train==0) | (y_train==1))]
+    y_train01 = y_train[((y_train==0) | (y_train==1))]
+    X_test01 = X_test[((y_test==0) | (y_test==1))]
+    y_test01 = y_test[((y_test==0) | (y_test==1))]
+
+    mod = LogisticRegression()
+    mod.fit(X_train01, y_train01)
+    
+    print('\n\n\n')
+    print("Results\n--------------------------------------------")
+    print("Logistic Regression Model trained to classify between the wheel turned Right correctly (Class 0) vs the wheel turned Left correctly (Class 1):")
+    print("Baseline Accuracy is: {0:.0f}%".format(max(np.mean(y_test01==0), np.mean(y_test01==1))*100))
+    print("Test Accuracy: {0:.0f}%".format(mod.score(X_test01, y_test01)*100))
+    print("--------------------------------------------")
+    class_plots(X_train[y_train==0], X_train[y_train==1], 'Wheel Turned Right', 'Wheel Turned Left', ROOT_DIR, config['exp_name'], 'Latent Variables at Time=100ms', 'slice1.png')
+    
+    
+    # Train a model to classify Wheel moved Right correctly vs Wheel moved Right incorrectly
+    X_train02 = X_train[((y_train==0) | (y_train==2))]
+    y_train02 = y_train[((y_train==0) | (y_train==2))]
+    X_test02 = X_test[((y_test==0) | (y_test==2))]
+    y_test02 = y_test[((y_test==0) | (y_test==2))]
+
+    mod = LogisticRegression()
+    mod.fit(X_train02, y_train02)
+    
+    print("Logistic Regression Model trained to classify between the wheel turned Right correctly (Class 0) vs the wheel turned Right incorrectly (Class 2):")
+    print("Baseline Accuracy is: {0:.0f}%".format(max(np.mean(y_test02==0), np.mean(y_test02==2))*100))
+    print("Test Accuracy: {0:.0f}%".format(mod.score(X_test02, y_test02)*100))
+    print("--------------------------------------------")
+    class_plots(X_train[y_train==0], X_train[y_train==2], 'Wheel Turned Right Correctly', 'Wheel Turned Right Incorrectly', ROOT_DIR, config['exp_name'], 'Latent Variables at Time=100ms', 'slice2.png')
+    
+    
+    # Compare the Latent Variable Model to the Original data
+    # Train a model to classify Wheel moved Right correctly vs Wheel moved left correctly using all the original
+    # Trials x Dims X Time
+    X_train_full = bin_data[:n_train, : , config['time_significance']][((y_train==0) | (y_train==1))]
+    y_train_full = y_train[((y_train==0) | (y_train==1))]
+    X_test_full = bin_data[n_train:, : , config['time_significance']][((y_test==0) | (y_test==1))]
+    y_test_full = y_test[((y_test==0) | (y_test==1))]
+    
+    mod = LogisticRegression()
+    mod.fit(X_train_full, y_train_full)
+    
+    print("Logistic Regression Model trained to classify between the wheel turned Right correctly (Class 0) vs the wheel turned Left correctly (Class 1) using all the Neurons (no dimensionality reduction):")
+    print("Baseline Accuracy is: {0:.0f}%".format(max(np.mean(y_test_full==0), np.mean(y_test_full==1))*100))
+    print("Test Accuracy: {0:.0f}%".format(mod.score(X_test_full, y_test_full)*100))
+    print("--------------------------------------------")

@@ -7,7 +7,7 @@ import os
 def create_raster(sl, spikes, channels):
     return
 
-def plot_trajectories2L(z, choices, accuracy, bin_size):
+def plot_trajectories2L(z, choices, accuracy, bin_size, ROOT_DIR, exp_name, save=False):
     first = True
     first2= True
     fig = go.Figure()
@@ -53,6 +53,8 @@ def plot_trajectories2L(z, choices, accuracy, bin_size):
                     zaxis_title='Latent Variable 2'),
                     width=1000, height=1000, title='Latent Variables over Time'
                     )
+    
+    fig.write_html(os.path.join(ROOT_DIR, "output", exp_name, "latent_trajs2_vlgp.html"))
     
     fig.show()
     

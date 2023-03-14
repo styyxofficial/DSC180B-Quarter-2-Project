@@ -8,6 +8,6 @@
     "length_scale" : 200e-3,
     "latent_dims" : 2,
     "min_trial_length" : 20,
-    "max_iter" : 2,
+    "max_iter" : 15,
     "time_significance" : 4
 }
