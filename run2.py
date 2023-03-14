@@ -82,6 +82,8 @@ if __name__ == "__main__":
     sessionTrain, params = vi.fit(sessionTrain, n_factors=config['latent_dims'], kernel=kernel, seed=10, max_iter=config['max_iter'], trial_length=config['min_trial_length'], GPFA=True)
     z_train = rearrange(sessionTrain.z, '(trials time) lat -> trials time lat', time=bin_data[0].shape[1])
     
+    print(type)
+    exit()
     # Infer latents of test data
     sessionTest = vi.infer(sessionTest, params=params)
     z_test = rearrange(sessionTest.z, '(trials time) lat -> trials time lat', time=bin_data[0].shape[1])

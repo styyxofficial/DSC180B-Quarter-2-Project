@@ -4,6 +4,15 @@
 <head>
     <link rel="stylesheet" type="text/css" href="styles.css">
     <title>Using Latent Variable Models to Predict Mouse Behavior</title>
+
+    <script type="text/javascript" src="http://code.jquery.com/jquery-latest.min.js"></script>
+    <script>$(function() { alert('hello') });</script>
+    <script>
+    $(function(){
+    $("#3dtraj").load("./output/mouse1/mouse_latent_trajs3d.html"); 
+    });
+    </script> 
+
 </head>
 
 
@@ -34,6 +43,7 @@
     <p> For our project, we use Latent Variable Models to extract neural trajectories from a mouse as it performs a decision-making task.
     </p>
 
+    <br>
     <h2>What are we trying to predict?</h2>
 
     <p> We are trying to predict whether a mouse will turn a wheel to the left or the right.
@@ -52,6 +62,7 @@
         <figcaption>Fig.2 - Example trajectories that would not be differentiable between behaviors. As you can see, it would not be possible to say that the behaviors followed different trajectories.</figcaption>
     </figure>
 
+    <br>
     <h2>What is our Data?</h2>
     <p> We use data collected by the International Brain Laboratory [IBL], which inserted Neuropixel probes into mice brains as they performed a decision making task.
         The task was as follows:
@@ -74,11 +85,11 @@
     </p>
 
     <figure>
-        <img src="output/imgs/raster1.png" alt="Raster Plot 1" style="width:953px;height:534px;"  class="center">
+        <img src="output/imgs/mouse_raster.png" alt="Raster Plot 1" style="width:953px;height:534px;"  class="center">
         <figcaption>Fig.4 - Raster plot of neurons over a session. Each black dot is a neuron firing (spike). Bars on the right indicate brain regions.</figcaption>
     </figure>
 
-
+    <br>
     <h2>What models are we using?</h2>
 
     <h3>Gaussian Process Factor Analysis</h3>
@@ -130,6 +141,7 @@
         of our neural data.
     </p>
 
+    <br>
     <h2>Procedure</h2>
 
     <h3>EDA</h3>
@@ -177,7 +189,7 @@
     </p>
 
 
-<figure>
+    <figure>
         <img src="output/imgs/Trajectories.png" alt="1-Dimensional Trajectories" style="width:566px;height:454px;"  class="center">
         <figcaption>Fig.8 - 50 Neural Trajectories when the stimulus was presented on the left visual field vs right visual field.</figcaption>
     </figure>
@@ -196,6 +208,8 @@
     <p>
         Work in Progress
     </p>
+
+    <div id="3dtraj"></div>
 
 </body>
 
