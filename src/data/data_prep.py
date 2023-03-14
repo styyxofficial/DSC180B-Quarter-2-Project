@@ -64,3 +64,20 @@ def bin_spikes(spikes, trials, ROOT_DIR, exp_name, bin_size=50e-3, save=False):
         np.savetxt(os.path.join(ROOT_DIR, 'data', 'out', exp_name, 'accuracy.csv'), accuracy, delimiter=',')
     
     return bin_data, goCue_times, firstMove_times, choices, accuracy
+
+def class_data(z, choices, accuracy, time_significance):
+    X = z[:, time_significance, :]
+    y = []
+    
+    for i in range(len(choices)):
+        if ((choices[i]==1) & (accuracy[i]==1)):
+            y.append(0)
+        elif ((choices[i]==-1) & (accuracy[i]==1)):
+            y.append(1)
+        elif ((choices[i]==1) & (accuracy[i]==-1)):
+            y.append(2)
+        elif ((choices[i]==-1) & (accuracy[i]==-1)):
+            y.append(3)
+    
+    
+    return X, y
