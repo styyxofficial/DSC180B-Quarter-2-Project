@@ -106,9 +106,7 @@ if __name__ == "__main__":
     print('\n\n\n')
     print("Results\n________________")
     print("Logistic Regression Model trained to classify between the wheel turned Right correctly (Class 0) vs the wheel turned Left correctly (Class 1):")
-    # print("Our baseline accuracy is:", max(np.mean(y_test01==0), np.mean(y_test01==1)))
     print("Baseline Accuracy is: {0:.0f}%".format(max(np.mean(y_test01==0), np.mean(y_test01==1))*100))
-    # print("Test Accuracy:", mod.score(X_test01, y_test01))
     print("Test Accuracy: {0:.0f}%".format(mod.score(X_test01, y_test01)*100))
     print("__________________________________________")
     class_plots(X_train[y_train==0], X_train[y_train==1], 'Wheel Turned Right', 'Wheel Turned Left', ROOT_DIR, config['exp_name'], 'Latent Variables at Time=100ms', 'slice1.png')
@@ -124,9 +122,24 @@ if __name__ == "__main__":
     mod.fit(X_train02, y_train02)
     
     print("Logistic Regression Model trained to classify between the wheel turned Right correctly (Class 0) vs the wheel turned Right incorrectly (Class 2):")
-    # print("Our baseline accuracy is:", max(np.mean(y_test01==0), np.mean(y_test01==1)))
     print("Baseline Accuracy is: {0:.0f}%".format(max(np.mean(y_test02==0), np.mean(y_test02==2))*100))
-    # print("Test Accuracy:", mod.score(X_test02, y_test02))
     print("Test Accuracy: {0:.0f}%".format(mod.score(X_test02, y_test02)*100))
     print("__________________________________________")
     class_plots(X_train[y_train==0], X_train[y_train==2], 'Wheel Turned Right Correctly', 'Wheel Turned Right Incorrectly', ROOT_DIR, config['exp_name'], 'Latent Variables at Time=100ms', 'slice2.png')
+    
+    
+    # Compare the Latent Variable Model to the Original data
+    # Train a model to classify Wheel moved Right correctly vs Wheel moved left correctly using all the original
+    # Trials x Dims X Time
+    X_train_full = bin_data[:n_train, : , config['time_significance']][((y_train==0) | (y_train==1))]
+    y_train_full = y_train[((y_train==0) | (y_train==1))]
+    X_test_full = bin_data[n_train:, : , config['time_significance']][((y_test==0) | (y_test==1))]
+    y_test_full = y_test[((y_test==0) | (y_test==1))]
+    
+    mod = LogisticRegression()
+    mod.fit(X_train_full, y_train_full)
+    
+    print("Logistic Regression Model trained to classify between the wheel turned Right correctly (Class 0) vs the wheel turned Left correctly (Class 1) using all the Neurons (no dimensionality reduction):")
+    print("Baseline Accuracy is: {0:.0f}%".format(max(np.mean(y_test_full==0), np.mean(y_test_full==1))*100))
+    print("Test Accuracy: {0:.0f}%".format(mod.score(X_test_full, y_test_full)*100))
+    print("__________________________________________")

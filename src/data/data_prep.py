@@ -16,7 +16,6 @@ def bin_spikes(spikes, trials, ROOT_DIR, exp_name, bin_size=50e-3, save=False):
     df = pd.DataFrame(data = {'clusters':spikes['clusters'], 'times':spikes['times']})
     df = df.groupby('clusters')['times'].apply(np.array) # Neurons x Spike Times
     
-    # trials_spikes = [] # The Spike times and results of each trial
     bin_data = []
     goCue_times = []
     firstMove_times = []
@@ -29,13 +28,6 @@ def bin_spikes(spikes, trials, ROOT_DIR, exp_name, bin_size=50e-3, save=False):
             continue
         elif ((np.isnan(trials['goCue_times'][i])) | (np.isnan(trials['firstMovement_times'][i]))):
             continue
-        
-        # spike_range = {}
-        
-        # spike_range['goCue_times'] = trials['goCue_times'][i]
-        # spike_range['firstMovement_times'] = trials['firstMovement_times'][i]
-        # spike_range['choice'] = trials['choice'][i]
-        # spike_range['feedbackType'] = trials['feedbackType'][i]
         
         goCue_times.append(trials['goCue_times'][i])
         firstMove_times.append(trials['firstMovement_times'][i])
@@ -51,10 +43,7 @@ def bin_spikes(spikes, trials, ROOT_DIR, exp_name, bin_size=50e-3, save=False):
             x.append(np.histogram(j[inds], hist_bins)[0])
         
         spikes_df = pd.DataFrame(x, index=df.index)
-        # spike_range['spikes_df'] = spikes_df
         bin_data.append(spikes_df)
-        
-        # trials_spikes.append(spike_range)
         
     if save:
         np.save(os.path.join(ROOT_DIR, 'data', 'out', exp_name, 'bin_data.npy'), bin_data)
@@ -63,7 +52,7 @@ def bin_spikes(spikes, trials, ROOT_DIR, exp_name, bin_size=50e-3, save=False):
         np.savetxt(os.path.join(ROOT_DIR, 'data', 'out', exp_name, 'choices.csv'), choices, delimiter=',')
         np.savetxt(os.path.join(ROOT_DIR, 'data', 'out', exp_name, 'accuracy.csv'), accuracy, delimiter=',')
     
-    return bin_data, goCue_times, firstMove_times, choices, accuracy
+    return np.array(bin_data), goCue_times, firstMove_times, choices, accuracy
 
 def class_data(z, choices, accuracy, time_significance):
     X = z[:, time_significance, :]
@@ -78,6 +67,5 @@ def class_data(z, choices, accuracy, time_significance):
             y.append(2)
         elif ((choices[i]==-1) & (accuracy[i]==-1)):
             y.append(3)
-    
     
     return np.array(X), np.array(y)
