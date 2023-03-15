@@ -1,0 +1,13 @@
+{
+    "exp_name" : "test",
+    "pid" : "73ff4936-8cd3-4a75-a772-f563e67d249d",
+    "eid" : "ebe2efe3-e8a1-451a-8947-76ef42427cc9",
+    "probe_name" : "probe00",
+    "bin_size" : 50e-3,
+    "raster" : false,
+    "length_scale" : 200e-3,
+    "latent_dims" : 2,
+    "min_trial_length" : 20,
+    "max_iter" : 15,
+    "time_significance" : 4
+}
