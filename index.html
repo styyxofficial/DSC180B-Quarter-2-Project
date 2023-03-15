@@ -8,7 +8,9 @@
     <script type="text/javascript" src="https://code.jquery.com/jquery-latest.min.js"></script>
     <script>
     $(function(){
-    $("#3dtraj").load("./output/mouse1/latent_trajs2_vlgp.html"); 
+    $("#3dtraj1").load("./output/mouse1/latent_trajs2_vlgp.html");
+    $("#3dtraj2").load("./output/mouse1/latent_trajs2_gpfa.html");
+    $("#3dtraj3").load("./output/mouse1/latent_trajs3_vlgp.html"); 
     });
     </script> 
 
@@ -30,7 +32,7 @@
     <p> Commonly in neuroscience research, animal brains are probed with electrodes, measuring voltage signals from neurons while the animal performs a task.
         Electrodes have become so advanced nowadays that they can contain hundreds of sensors on a probe about the size of a human hair.
         During data analysis, this high dimensionality creates problems in computation and interpretation. It is hard to see what a 100-dimensional object looks like.
-        Because of this, there has been a push towards dimensionality reduction models in neuroscience research. Researchers can reduce the 100 neurons down to 2 dimensions, allowing them to be visualized on a plot.
+        Because of this, there has been a push towards dimensionality reduction models in neuroscience research. Researchers can reduce the 100 neurons down to 2 dimensions, allowing them to be visualized on a graph.
         Given that the data is recorded over time, the researchers can observe how the neurons "move" in this 2-D space. When these variables are plotted, they can be interpreted as neural trajectories. 
     </p>
 
@@ -45,15 +47,15 @@
     <br>
     <h2>What are we trying to predict?</h2>
 
-    <p> We are trying to predict whether a mouse will turn a wheel to the left or the right.
-        By plotting our neural trajectories, we may observe that there is a difference in the brain's "path" when the mouse turns a wheel to the left vs right.
+    <p> We are trying to predict whether a mouse will turn a wheel clockwise (Wheel Turned Right) or counter-clockwise (Wheel Turned Left).
+        By plotting our neural trajectories, we may observe that there is a difference in the brain's "path" when the mouse turns a wheel clockwise vs counter-clockwise.
         We will use this difference to create a classification algorithm to predict which direction the mouse will choose.
         Figures 1 and 2 show example trajectories that we might obtain.
     </p>
 
     <figure>
         <img src="output/imgs/example_trajectory1.png" alt="Example Trajectory 1" style="width:566px;height:454px;"  class="center">
-        <figcaption>Fig.1 - Example trajectories that would be differentiable between behaviors. The red dashed line indcates separability between the trajectories. We can clearly see that the 2 behaviors follow different paths</figcaption>
+        <figcaption>Fig.1 - Example trajectories that would be differentiable between behaviors. The red dashed line indcates separability between the trajectories. We can clearly see that the 2 behaviors follow different paths.</figcaption>
     </figure>
     <br>
     <figure>
@@ -156,13 +158,13 @@
     </figure>
 
     <p>
-        From Figure 6, we can see a flurry of neural activity in the MOp as the mouse begins to move. This increase in firing rate is what we hope to capture in our model.
+        From Figure 7, we can see a flurry of neural activity in the MOp as the mouse begins to move. This increase in firing rate is what we hope to capture in our model.
     </p>
 
     <h3>Data Cleaning</h3>
     <p>
-        We chose to analyze data that came from the Primary Motor Cortex (MOp), Secondary Motor Cortex (MOs), and Primary Visual Area (VISp).
-        We believed that the trajectories obtained from these regions would be more differentiable between the different behaviors we expect the mouse to engage in.
+        We chose to analyze data that came from the Primary Motor Cortex (MOp).
+        We believed that the trajectories obtained from this region would be more differentiable between the different behaviors we expect the mouse to engage in.
     </p>
 
     <p>
@@ -177,35 +179,99 @@
     </p>
 
     <p>
-        The Latent Variable Models were able to fit within a few minutes and inference took about 1 second per trajectory.
-        Figure 6 shows a real output of the model.
+        Shown below are trajectories we obtained using a variety of methods.
     </p>
 
     <figure>
-        <img src="output/imgs/model_trajectories1.png" alt="Model Trajectories" style="width:566px;height:454px;"  class="center">
-        <figcaption>Fig.8 - 10 Neural Trajectories when the stimulus was presented on the left visual field vs right visual field.</figcaption>
+        <div id="3dtraj1"></div>
+        <figcaption>Fig.8 - Neural Trajectories when the wheel was correctly turned counter-clockwise (Red) and clockwise (Blue). Each line represents a different trial.
+            This plot shows 2 latent variables computed using vLGP over time.
+        </figcaption>
     </figure>
-
+    <br>
+    <figure>
+        <div id="3dtraj2"></div>
+        <figcaption>Fig.9 - Neural Trajectories when the wheel was correctly turned counter-clockwise (Red) and clockwise (Blue). Each line represents a different trial.
+            This plot shows 2 latent variables computed using GPFA over time.
+        </figcaption>
+    </figure>
+    <br>
+    <figure>
+        <div id="3dtraj3"></div>
+        <figcaption>Fig.10 - Neural Trajectories when the wheel was correctly turned counter-clockwise (Red) and clockwise (Blue). Each line represents a different trial.
+            This plot shows 3 latent variables computed using vLGP. Time is not shown.
+        </figcaption>
+    </figure>
+    <br>
     <p>
-        From the trajectories in Figure 7, we can see that it seems unlikely to be able to differentiate the mouse's behavior.
-        As mentioned before, we want to see a clean separation between the trial types. 
-        Nevertheless, we continue our analyses in the hopes that the classification model will be able to find a separation that we could not.
+        From Figure 8 we can see that the trajectories start off very different, but then begin to blend together as time goes on. This indicates that very specific processes are occurring in the brain early after the mouse begins moving the wheel.
+        Figure 10 shows 3 latent variables, and it might be possible to say the trajectries are separable, however without a time dimension it is difficult to tell when this separability occured.
     </p>
-
-
-    <figure>
-        <img src="output/imgs/Trajectories.png" alt="1-Dimensional Trajectories" style="width:566px;height:454px;"  class="center">
-        <figcaption>Fig.9 - 50 Neural Trajectories when the stimulus was presented on the left visual field vs right visual field.</figcaption>
-    </figure>
+    <br>
     
     <h3>Behavior Classification</h3>
     <p>
-        Work in Progress
+        As mentioned before, we want to see a clean separation between the trial types which we can observe in Figure 8 at Time=100ms. Using this information, we take a slice of the data at Time=100ms.
     </p>
+
+    <figure>
+        <img src="output/mouse1/imgs/slice1.png" alt="Slice Showing Separability" style="width:622px;height:490px;"  class="center">
+        <figcaption>Fig.11 - Latent Variables 100 ms after movement onset when the mouse correctly turned the wheel clockwise (blue) and counter-clockwise (red) </figcaption>
+    </figure>
+
+    <p>
+        Figure 11 shows very discernable classes which we train a Logistic Regression Classifier on.
+    </p>
+
+    <figure>
+        <img src="output/mouse1/imgs/slice2.png" alt="Slice Showing Separability" style="width:622px;height:490px;"  class="center">
+        <figcaption>Fig.12 - Latent Variables 100 ms after movement onset when the mouse correctly turned the wheel clockwise (blue) and incorrectly turned the wheel clockwise (red) </figcaption>
+    </figure>
+
+    Figure 12 shows very poor separation between the classes, but we train a Logistic Regression Classifier on it to see how well it can perform.
 
     <h2>Results</h2>
     <p>
-        Work in Progress
+        Due to an imbalanced test set, we use the metric Balanced Accuracy to evaluate our classifiers. The higher the balanced accuracy, the better the classifier performed.
+        We evaluated the classifiers in 3 different scenarios, using no dimenstionality reduction vs 2 latent variables, using vLGP vs GPFA, and predicting between Class 0 and 1 or Class 0 and 2.
+        <table>
+            <tr>
+              <th># of Latent Variables</th>
+              <th>Method of Dimensionality Reduction</th>
+              <th>Classes</th>
+              <th>Balanced Accuracy</th>
+            </tr>
+            <tr>
+              <td>N/A</td>
+              <td>No Dimensionality Reduction</td>
+              <td>Class 0 vs Class 1</td>
+              <td>94%</td>
+            </tr>
+            <tr>
+                <td>2</td>
+                <td>vLGP</td>
+                <td>Class 0 vs Class 1</td>
+                <td>93%</td>
+            </tr>
+            <tr>
+                <td>2</td>
+                <td>GPFA</td>
+                <td>Class 0 vs Class 1</td>
+                <td>91%</td>
+            </tr>
+            <tr>
+                <td>2</td>
+                <td>vLGP</td>
+                <td>Class 0 vs Class 2</td>
+                <td>50%</td>
+            </tr>
+            <tr>
+                <td>2</td>
+                <td>GPFA</td>
+                <td>Class 0 vs Class 2</td>
+                <td>50%</td>
+            </tr>
+        </table>
     </p>
 
     <h2>Conclusion</h2>
@@ -213,7 +279,7 @@
         Work in Progress
     </p>
 
-    <div id="3dtraj"></div>
+    
 
 </body>
 
