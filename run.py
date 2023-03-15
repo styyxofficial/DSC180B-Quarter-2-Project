@@ -28,12 +28,14 @@ if __name__ == "__main__":
     elif len(sys.argv) > 2:
         raise Exception('Too many arguments. Only provide the config file as an argument.')
     
-    with open('config/' + sys.argv[1]) as json_file:
-        config = json.load(json_file)
-    
     if sys.argv[1]=='test':
         with open('config/test.json') as json_file:
             config = json.load(json_file)
+    else:
+        with open('config/' + sys.argv[1]) as json_file:
+            config = json.load(json_file)
+    
+    
         
     # make necessary directories
     shutil.rmtree(os.path.join(ROOT_DIR, 'data', 'out', config['exp_name']))
