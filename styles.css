@@ -32,6 +32,7 @@ ol {
 }
 
 table {
-    margin-left: auto;
+    display: block;
     margin-right: auto;
-  }
+    width: 100%;
+}

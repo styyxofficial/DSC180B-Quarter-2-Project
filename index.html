@@ -233,22 +233,24 @@
     <h2>Results</h2>
     <p>
         Due to an imbalanced test set, we use the metric Balanced Accuracy to evaluate our classifiers. The higher the balanced accuracy, the better the classifier performed.
-        We evaluated the classifiers in 3 different scenarios, using no dimenstionality reduction vs 2 latent variables, using vLGP vs GPFA, and predicting between Class 0 and 1 or Class 0 and 2.
-        Class 0 is when the mouse correctly moved the wheel clockwise, Class 1 is when the mouse correctly moved the wheel counter-clockwise, and Class 2 is when the mouse incorrectly moved the wheel clockwise.
+        We evaluated the classifiers in 3 different scenarios, using no dimensionality reduction vs using 2 latent variables, using vLGP vs GPFA, and predicting between Class 0 and 1 or Class 0 and 2.
+    </p>
+    <p>
+        Class 0 is when the mouse correctly moved the wheel clockwise, Class 1 is when the mouse correctly moved the wheel counter-clockwise, Class 2 is when the mouse incorrectly moved the wheel clockwise, and Class 3 is when the mouse incorrectly moved the wheel counter-clockwise however it is not used in this analysis.
     </p>
 
     <table>
         <tr>
-          <th># of Latent Variables</th>
-          <th>Method of Dimensionality Reduction</th>
-          <th>Classes</th>
-          <th>Balanced Accuracy</th>
+            <th style="width:10%"># of Latent Variables</th>
+            <th style="width:20%">Method of Dimensionality Reduction</th>
+            <th style="width:10%">Classes</th>
+            <th style="width:10%">Balanced Accuracy</th>
         </tr>
         <tr>
-          <td>N/A</td>
-          <td>No Dimensionality Reduction</td>
-          <td>Class 0 vs Class 1</td>
-          <td>94%</td>
+            <td>N/A</td>
+            <td>No Dimensionality Reduction</td>
+            <td>Class 0 vs Class 1</td>
+            <td>94%</td>
         </tr>
         <tr>
             <td>2</td>
@@ -275,7 +277,6 @@
             <td>50%</td>
         </tr>
     </table>
-    
     <!-- <div>
       <img src="output/imgs/ClassVLGP.png" alt="VLGPplot" style="width:40%,height:40%">
       <img src="output/imgs/ClassGPFA.png" alt="GPFAplot" style="width:40%,height:40%">
@@ -285,7 +286,7 @@
         <img src="output/imgs/ClassVLGPCorr.png" alt="VLGPplotCorr" style="width:40%,height:40%">
         <img src="output/imgs/ClassGPFACorr.png" alt="GPFAplotCorr" style="width:40%,height:40%">
     </div> -->
-
+    <br>
     <h2>Conclusion</h2>
     <p>
         Work in Progress
