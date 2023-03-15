@@ -13,7 +13,6 @@ where $D_{KL}$ is the Kullback-Leibler divergence, which measures the difference
 
 The optimization problem can be solved using gradient-based optimization algorithms, such as gradient descent or conjugate gradient. The solution provides estimates of the latent variables, which can be used to reconstruct the hidden patterns in the data. For the purposes of our project, vLGP is used to extract neural trajectories, which are the underlying patterns in neural activity that reflect how the brain processes information.
 # To Run
-
 `python run.py <config_name>.json`
 
 Outputs of run.py will be stored in "output/<config_name>"
