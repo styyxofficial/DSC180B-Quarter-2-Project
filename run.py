@@ -38,8 +38,8 @@ if __name__ == "__main__":
     
         
     # make necessary directories
-    shutil.rmtree(os.path.join(ROOT_DIR, 'data', 'out', config['exp_name']))
-    shutil.rmtree(os.path.join(ROOT_DIR, 'output', config['exp_name'], 'imgs'))
+    shutil.rmtree(os.path.join(ROOT_DIR, 'data', 'out', config['exp_name']), ignore_errors=True)
+    shutil.rmtree(os.path.join(ROOT_DIR, 'output', config['exp_name'], 'imgs'), ignore_errors=True)
     os.makedirs(os.path.join(ROOT_DIR, 'data', 'out', config['exp_name']))
     os.makedirs(os.path.join(ROOT_DIR, 'output', config['exp_name'], 'imgs'))
     
