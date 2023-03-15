@@ -19,4 +19,4 @@ The optimization problem can be solved using gradient-based optimization algorit
 
 Config files are .json files stored in "config/". They contain the hyperparameters of the model, as well as the PID, EID, and probe of the mouse, which determines what data will be analyzed. You can go to [the IBL website](https://viz.internationalbrainlab.org/app) to get different data. If the data you want is not already in "data/raw/ONE/", then in run.py remove the `mode='local'` flag when instantiating ONE.
 
-Outputs of run.py will be stored in "output/<config_name>/"
+Outputs of run.py will be stored in "output/<exp_name>/"
