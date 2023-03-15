@@ -15,5 +15,5 @@ The optimization problem can be solved using gradient-based optimization algorit
 # To Run
 
 > python run.py
-<test>
+\<test\>
 Outputs of run.py will be stored in "output/"
