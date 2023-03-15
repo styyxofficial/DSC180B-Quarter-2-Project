@@ -31,6 +31,10 @@ if __name__ == "__main__":
     with open('config/' + sys.argv[1]) as json_file:
         config = json.load(json_file)
     
+    if sys.argv[1]=='test':
+        with open('config/test.json') as json_file:
+            config = json.load(json_file)
+        
     # make necessary directories
     shutil.rmtree(os.path.join(ROOT_DIR, 'data', 'out', config['exp_name']))
     shutil.rmtree(os.path.join(ROOT_DIR, 'output', config['exp_name'], 'imgs'))

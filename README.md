@@ -1,9 +1,11 @@
 # Processing Electrophysiology Data to Extract Neural Trajectories
 
 Raw electrophysiology data is very high dimensional and contains a lot of noisy, spiky, activity. Due to this, it must be heavily processed before the accurate neural trajectories can be extracted.
-We utilized Variational Latent Gaussian Process in our study to reduce its dimensions and smooth our data. 
+We utilized Variational Latent Gaussian Process in our study to reduce its dimensions and smooth our data.
 
-# Variational Latent Gaussian Process
+Using this dimensionality reduced smooth data, we created a classifier to predict mouse behavior.
+
+## Variational Latent Gaussian Process
 
 In a variational latent Gaussian process (VLGP), the observed data, y, is modeled as a Gaussian process, with mean function, f(x), and covariance function, k(x, x'). The underlying structure in the data is captured by latent variables, z, which are treated as random variables. The prior distribution over the latent variables is modeled as a Gaussian distribution.
 
@@ -15,4 +17,6 @@ The optimization problem can be solved using gradient-based optimization algorit
 # To Run
 `python run.py <config_name>.json`
 
-Outputs of run.py will be stored in "output/<config_name>"
+Config files are .json files stored in "config/". They contain the hyperparameters of the model, as well as the PID, EID, and probe of the mouse, which determines what data will be analyzed. You can go to [the IBL website](https://viz.internationalbrainlab.org/app) to get different data. If the data you want is not already in "data/raw/ONE/", then in run.py remove the `mode='local'` flag when instantiating ONE.
+
+Outputs of run.py will be stored in "output/<config_name>/"
