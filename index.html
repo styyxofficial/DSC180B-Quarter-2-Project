@@ -240,12 +240,15 @@
         <figcaption>Fig.12 - Latent Variables 100 ms after movement onset when the mouse correctly turned the wheel clockwise (blue) and incorrectly turned the wheel clockwise (red) </figcaption>
     </figure>
 
+    <p>
     Figure 12 shows very poor separation between the classes, but we train a Logistic Regression Classifier on it to see how well it can perform.
+    </p>
 
+    <br>
     <h2>Results</h2>
     <p>
         Due to an imbalanced test set, we use the metric Balanced Accuracy to evaluate our classifiers. The higher the balanced accuracy, the better the classifier performed.
-        We evaluated the classifiers in 3 different scenarios, using no dimensionality reduction vs using 2 latent variables, using vLGP vs GPFA, and predicting between Class 0 and 1 or Class 0 and 2.
+        We evaluated the classifiers in 3 different scenarios, using no dimensionality reduction vs using 2 latent variables, using vLGP vs GPFA, and predicting between Class 0 or Class 1 and Class 0 or Class 2.
     </p>
     <p>
         Class 0 is when the mouse correctly moved the wheel clockwise, Class 1 is when the mouse correctly moved the wheel counter-clockwise, Class 2 is when the mouse incorrectly moved the wheel clockwise, and Class 3 is when the mouse incorrectly moved the wheel counter-clockwise however it is not used in this analysis.
@@ -289,22 +292,32 @@
             <td>50%</td>
         </tr>
     </table>
-    <!-- <div>
-      <img src="output/imgs/ClassVLGP.png" alt="VLGPplot" style="width:40%,height:40%">
-      <img src="output/imgs/ClassGPFA.png" alt="GPFAplot" style="width:40%,height:40%">
-    </div>
 
-    <div>
-        <img src="output/imgs/ClassVLGPCorr.png" alt="VLGPplotCorr" style="width:40%,height:40%">
-        <img src="output/imgs/ClassGPFACorr.png" alt="GPFAplotCorr" style="width:40%,height:40%">
-    </div> -->
-    <br>
-    <h2>Conclusion</h2>
     <p>
-        Work in Progress
+        As can be seen from the table above, the classifier that did not use dimensionality reduction performed the best.
+        This contrary from what we were expecting, which was to see better classification using latent variable models.
+        We also see that vLGP outperforms GPFA, which is what we expect since vLGP is able to extract more accurate latent variables.
+        Both latent variable models perform poorly when trying to discern whether the mouse turned the wheel clockwise correctly or incorrectly.
     </p>
 
-    
+    <br>
+    <h2>Discussion</h2>
+    <p>
+        We observe that our latent variable models performed more poorly compared to using no dimensionality reduction.
+        This is most likely due to the loss of information that occurs when reducing dimensionality, however it is possible when analyzing a larger number of neurons that the accuracy would suffer due to noise.
+        In general GPFA and vLGP are able to filter out noise and so might overtake the performance non-dimensionality reduced classifiers at very high dimensionality.
+        There is still value in using latent variable models in this instance as it allowed us to visualize how the brain "moved" over time.
+        As we saw in Figure 8, there was clear separation in the motor cortex around 100ms, but then the latents became seemingly random, showing that the mouse's movement will cause separation, and once the mouse stops moving the activity in the brain becomes random again.
+    </p>
+    <p>
+        Being able to discern behaviors using the neural signals indicate that there are distinct processes in the motor cortex when the mouse turns the wheel clockwise vs counter-clockwise.
+        This makes sense as we would expect different neurons to fire when controlling different muscles.
+        On the other hand, we see no difference in the brain when the mouse turns the wheel clockwise correctly vs incorrectly.
+        This makes sense since we are analyzing the motor cortex, and the actions taken during these 2 behaviors are the same.
+        It is mostly likely difficult to find separation between correct vs incorrect, since the mouse believes what it is doing to be correct, otherwise it would not have made a mistake.
+    </p>
+
+    <br><br><br>
 
 </body>
 
