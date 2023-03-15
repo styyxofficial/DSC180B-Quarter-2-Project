@@ -188,21 +188,21 @@
             This plot shows 2 latent variables computed using vLGP over time.
         </figcaption>
     </figure>
-    <br>
+    
     <figure>
         <div id="3dtraj2"></div>
         <figcaption>Fig.9 - Neural Trajectories when the wheel was correctly turned counter-clockwise (Red) and clockwise (Blue). Each line represents a different trial.
             This plot shows 2 latent variables computed using GPFA over time.
         </figcaption>
     </figure>
-    <br>
+    
     <figure>
         <div id="3dtraj3"></div>
         <figcaption>Fig.10 - Neural Trajectories when the wheel was correctly turned counter-clockwise (Red) and clockwise (Blue). Each line represents a different trial.
             This plot shows 3 latent variables computed using vLGP. Time is not shown.
         </figcaption>
     </figure>
-    <br>
+    
     <p>
         From Figure 8 we can see that the trajectories start off very different, but then begin to blend together as time goes on. This indicates that very specific processes are occurring in the brain early after the mouse begins moving the wheel.
         Figure 10 shows 3 latent variables, and it might be possible to say the trajectries are separable, however without a time dimension it is difficult to tell when this separability occured.
@@ -235,45 +235,46 @@
         Due to an imbalanced test set, we use the metric Balanced Accuracy to evaluate our classifiers. The higher the balanced accuracy, the better the classifier performed.
         We evaluated the classifiers in 3 different scenarios, using no dimenstionality reduction vs 2 latent variables, using vLGP vs GPFA, and predicting between Class 0 and 1 or Class 0 and 2.
         Class 0 is when the mouse correctly moved the wheel clockwise, Class 1 is when the mouse correctly moved the wheel counter-clockwise, and Class 2 is when the mouse incorrectly moved the wheel clockwise.
-        <table>
-            <tr>
-              <th># of Latent Variables</th>
-              <th>Method of Dimensionality Reduction</th>
-              <th>Classes</th>
-              <th>Balanced Accuracy</th>
-            </tr>
-            <tr>
-              <td>N/A</td>
-              <td>No Dimensionality Reduction</td>
-              <td>Class 0 vs Class 1</td>
-              <td>94%</td>
-            </tr>
-            <tr>
-                <td>2</td>
-                <td>vLGP</td>
-                <td>Class 0 vs Class 1</td>
-                <td>93%</td>
-            </tr>
-            <tr>
-                <td>2</td>
-                <td>GPFA</td>
-                <td>Class 0 vs Class 1</td>
-                <td>91%</td>
-            </tr>
-            <tr>
-                <td>2</td>
-                <td>vLGP</td>
-                <td>Class 0 vs Class 2</td>
-                <td>50%</td>
-            </tr>
-            <tr>
-                <td>2</td>
-                <td>GPFA</td>
-                <td>Class 0 vs Class 2</td>
-                <td>50%</td>
-            </tr>
-        </table>
     </p>
+
+    <table>
+        <tr>
+          <th># of Latent Variables</th>
+          <th>Method of Dimensionality Reduction</th>
+          <th>Classes</th>
+          <th>Balanced Accuracy</th>
+        </tr>
+        <tr>
+          <td>N/A</td>
+          <td>No Dimensionality Reduction</td>
+          <td>Class 0 vs Class 1</td>
+          <td>94%</td>
+        </tr>
+        <tr>
+            <td>2</td>
+            <td>vLGP</td>
+            <td>Class 0 vs Class 1</td>
+            <td>93%</td>
+        </tr>
+        <tr>
+            <td>2</td>
+            <td>GPFA</td>
+            <td>Class 0 vs Class 1</td>
+            <td>91%</td>
+        </tr>
+        <tr>
+            <td>2</td>
+            <td>vLGP</td>
+            <td>Class 0 vs Class 2</td>
+            <td>50%</td>
+        </tr>
+        <tr>
+            <td>2</td>
+            <td>GPFA</td>
+            <td>Class 0 vs Class 2</td>
+            <td>50%</td>
+        </tr>
+    </table>
     
     <!-- <div>
       <img src="output/imgs/ClassVLGP.png" alt="VLGPplot" style="width:40%,height:40%">
